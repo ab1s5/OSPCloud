@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>OSP Cloud</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext">
+    <link rel="stylesheet" href="{% static 'css/cloud_app.css' %}">
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <div class="page-center">
+            <h1><a href="{% url 'main' %}">
+                <center>OSP Cloud</center>
+            </a></h1>
+            <a href="{% url 'google_login' %}"><center>
+                <button type="submit" class="save btn btn-primary">구글 로그인</button>
+            </center></a>
+        </div>
+    {% else %}
+        <div class = 'page-header'>
+            <h1><a href="{% url 'main' %}">OSP Cloud</a>
+                <a href="{% url 'upload' %}" class="top-right" >
+                    <span class="glyphicon glyphicon-plus"></span></a></h1>
+        </div>
+    <vr>
+        <div class  = 'profile'>
+            <img src="my_profile.png" width="150" height="150">
+            <h5>{{ user.username }} </h5>
+            <h6>{{ user.usermail }} </h6>
+            <h6><a href="{% url 'user_edit' %}">회원정보수정</a>
+                <a href="{% url 'logout' %}">로그아웃</a></h6>
+        </div>
+    </vr>
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
