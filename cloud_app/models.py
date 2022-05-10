@@ -20,8 +20,8 @@ class UserInfo(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=30)
-    images = models.CharField()
-    phone_num = models.Charfield(max_length=15)
+    images = models.CharField(max_length=300)
+    phone_num = models.CharField(max_length=15)
 
 class FileDetailInfo(models.Model):
     _id = models.ObjectIdField()
@@ -33,4 +33,4 @@ class FileDetailInfo(models.Model):
     guest = models.EmbeddedField(
         model_container=Guest
     )
-    comment = models.CharField()
+    comment = models.CharField(max_length=50)
