@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'cloud_app',
-
+    'google_app',
 ]
 
 MIDDLEWARE = [
@@ -129,8 +129,8 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_GOOGLE_PLUS_KEY = '941616017627-m7b8q6teqt1g69ktl957h5bc49j9c125.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_PLUS_SECRET = 'sTkqc21jasmcD7KuLqi1bQr5'
+SOCIAL_AUTH_GOOGLE_PLUS_KEY = '806999554154-c8o7u3jduu03fnrto1aph9idtu50gn05.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_PLUS_SECRET = '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'
 AUTHENTICATION_BACKENDS = ( 'social_core.backends.google.GooglePlusAuth', )
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
