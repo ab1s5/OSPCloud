@@ -53,7 +53,12 @@ h1, h2, h3, h4 {
     margin: 20px 0px 20px 20px;
 }
 
-vr {
+#main {
+    display:grid;
+    grid-template-columns: 150px 1fr;
+}
+
+.vr {
     display: block;
     width:10px;
     background-color:#000;

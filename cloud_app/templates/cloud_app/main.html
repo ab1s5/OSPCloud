@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="ko">
+<meta charset="UTF-8">
 
-{% extends 'OSP cloud/base.html' %}
-
+{% extends 'base.html' %}
+<style>
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 150px;
+        word-wrap: break-word;
+        background-color: lightgray;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+    }
+</style>
 {% block content %}
     <h3>업로드 파일</h3>
-{% for file in file_list %}
-    <div class="card h-50"><a href=''>
-        <img class="card-img-top" src="https://dummyimage.com/80x80/dee2e6/6c757d.jpg" alt="...">
-        <div class="card-body p-4">
-            <h5 class="fw-bolder">{{ file.filename }}</h5>
-            <h6> {{ file.createdate }} </h6>
-            {% for file.recieve in file_key.recieve.all %}
-            <h6> {{ file.recieve.count }}명에게 공유 </h6>
-            {% empty %}
-            <h6> 나만보기 </h6>
+    {% for file in file_list %}
+    <div class="col mb-5">
+        <div class="card h-50"><a href=''>
+            <img class="card-img-top" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg" alt="...">
+            <div class="card-body p-4">
+                <h5 class="fw-bolder">{{ file.filename }}</h5>
+                <h6> {{ file.createdate }} </h6>
+                {% for file.recieve in file_key.recieve.all %}
+                <h6> {{ file.guest.count }}명에게 공유 </h6>
+                {% empty %}
+                <h6> 나만보기 </h6>
+            </div></a>
         </div>
-    </a>
     </div>
-{% empty %}
+    {% empty %}
     <p>업로드 파일이 없습니다.</p>
-{% endfor %}
+    {% endfor %}
     <h3>공유받은 파일</h3>
-{% for file in file_list %}
-    <div class="card h-50"><a href=''>
-        <img class="card-img-top" src="https://dummyimage.com/80x80/dee2e6/6c757d.jpg" alt="...">
-        <div class="card-body p-4">
-            <h5 class="fw-bolder">{{ file.filename }}</h5>
-            <h6> {{ file.createdate }} </h6>
-            <h6> {{ file.recieve.count }} </h6>
-        </div>
-    </a>
+    {% for file in file_list %}
+    <div class="col mb-5">
+        <div class="card h-50"><a href=''>
+            <img class="card-img-top" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg">
+            <div class="card-body p-4">
+                <h5 class="fw-bolder">{{ file.filename }}</h5>
+                <h6> {{ file.createdate }} </h6>
+                <h6> {{ file.owner }} 님이 공유 </h6>
+            </div>
+        </a></div>
     </div>
-{% empty %}
+    {% empty %}
     <p>공유받은 파일이 없습니다.</p>
-{% endfor %}
+    {% endfor %}
 {% endblock %}

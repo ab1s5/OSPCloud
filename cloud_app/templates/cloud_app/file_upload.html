@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% extends 'base.html' %}
+    <h3>파일 업로드</h3>
+    파일명 <textarea rows="2" class="filename_inbox_text"></textarea>
+    <form method="post" entype="multipart/form-data">
+	{% csrf_token %}
+    <p>공유 파일 선택 <input type="file" name="myfile" accept=".*"></p>
+    <p><button type="submit">파일업로드</button></p>
+    </form>
+</div>
+</body>
+</html>

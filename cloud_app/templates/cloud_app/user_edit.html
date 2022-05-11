@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<meta charset="UTF-8">
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h3> 회원정보수정</h3>
+    <form action="{% url 'member_modify' %}" method="POST">
+        {% csrf_token %}
+        휴대전화번호 <input type="text" name="Phone_Num" value="{{user.Phone_Num}}">
+
+        <input type="submit" value="수정">
+    </form>
+{% endblock %}
