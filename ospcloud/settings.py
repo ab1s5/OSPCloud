@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # "django_mongoengine",
     'social_django',
     'cloud_app',
-    'google_app',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -155,8 +155,8 @@ AUTHENTICATION_BACKENDS = ( 'social_core.backends.google.GooglePlusAuth', )
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
-    'google_app.views.auth_allowed',
-    'google_app.views.social_user',
+    'cloud_app.views.auth_allowed',
+    'cloud_app.views.social_user',
     'social_core.pipeline.social_auth.associate_by_email',
     'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',
