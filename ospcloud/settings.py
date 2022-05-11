@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&-!p#*kh2n=#+6mw)_!y@=&ml7_$0ff@@g-4-t&85+pa5o+)1_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # "django_mongoengine",
     'social_django',
     'cloud_app',
     'google_app',
@@ -72,14 +73,36 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ospcloud.wsgi.application'
 
+# MONGODB_DATABASES = {
+#     "default": {
+#         "name": 'ospcloud',
+#         "host": '35.160.38.122',
+#         "password": 'ospcloud0519',
+#         "username": 'root',
+#         "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+#     },
+# }
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+     'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'ospcloud',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': '35.160.38.122',
+            'port': 27017,
+            'username': 'root',
+            'password': 'ospcloud0519',
+            'authSource': 'admin',
+            'authMechanism': 'SCRAM-SHA-1'
+        }, 
     }
 }
 
