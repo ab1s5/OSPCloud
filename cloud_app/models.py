@@ -15,6 +15,14 @@ class Guest(models.Model):
     class Meta:
         abstract = True
 
+class Comment(models.Model):
+    _id = models.ObjectIdField()
+    comment_name = models.CharField(max_length=50)
+    comment_date = models.DateField()
+
+    class Meta:
+        abstract = True
+
 
 class UserInfo(models.Model):
     _id = models.ObjectIdField()
@@ -26,11 +34,14 @@ class UserInfo(models.Model):
 class FileDetailInfo(models.Model):
     _id = models.ObjectIdField()
     file_title = models.CharField(max_length=50)
-    file_upload = models.DateField
+    file_upload = models.DateField()
+    file_images = models.CharField()
     owner = models.EmbeddedField(
         model_container=Owner
     )
     guest = models.EmbeddedField(
         model_container=Guest
     )
-    comment = models.CharField()
+    comment = models.EmbeddedField(
+        model_container=Comment
+    )
