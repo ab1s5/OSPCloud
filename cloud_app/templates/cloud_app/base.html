@@ -1,25 +1,25 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>OSP Cloud</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="css/styles2.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext">
-    <link rel="stylesheet" type="text/css" href="{%static 'style.css'%}">
+    <link rel="stylesheet" type="text/css" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" type="text/css" href="{%static 'css/styles.css'%}">
+    <link rel="stylesheet" type="text/css" href="{%static 'css/styles2.css'%}">
     <style>
         #main{
             display:grid;
             grid-template-columns: 200px 1fr;
         }
 	    .profile{
-            border-right:1px solid black;
             width:150px;
             margin:0;
             padding:20px;
         }
         .content_container{
+            border-left:1px solid black;
             padding:20px;
         }
         h6{
@@ -58,6 +58,7 @@
                     {% endblock %}
             </div>
         </div>
+    {% endif %}
 </body>
 
 </html>

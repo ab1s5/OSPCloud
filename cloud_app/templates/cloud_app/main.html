@@ -1,9 +1,7 @@
-<!DOCTYPE html>
+{% extends 'cloud_app/base.html' %}
 {% load static %}
 <html lang="ko">
 <meta charset="UTF-8">
-
-{% extends 'base.html' %}
 <style>
     .card {
         position: relative;
@@ -25,22 +23,23 @@
             <img class="card-img-top" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg" alt="...">
             <div class="card-body p-4">
                 <h5 class="fw-bolder">{{ file.filename }}</h5>
-                <h6> {{ file.createdate }} </h6>
-                {% for file.recieve in file_key.recieve.all %}
-                <h6> {{ file.guest.count }}명에게 공유 </h6>
+                <h6> {{ file.fileUpload }} </h6>
+                {% for guest in guest_list %}
+                <h6> {{ fileDetail.guest.count }}명에게 공유 </h6>
                 {% empty %}
                 <h6> 나만보기 </h6>
+                {% endfor %}
             </div></a>
         </div>
     </div>
     {% empty %}
-    <p>업로드 파일이 없습니다.</p>
+        <p>업로드 파일이 없습니다.</p>
     {% endfor %}
     <h3>공유받은 파일</h3>
     {% for file in file_list %}
     <div class="col mb-5">
         <div class="card h-50"><a href=''>
-            <img class="card-img-top" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg">
+            <img class="card-img-top" src="">
             <div class="card-body p-4">
                 <h5 class="fw-bolder">{{ file.filename }}</h5>
                 <h6> {{ file.createdate }} </h6>

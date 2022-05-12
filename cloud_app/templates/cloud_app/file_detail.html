@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+{% extends 'cloud_app/base.html' %}
 {% load static %}
 <html lang="ko">
 <meta charset="UTF-8">
-{% extends 'base.html' %}
 <style>
-    .post{
+    .detail{
         display:grid;
         grid-template-columns: 1fr 300px;
     }
@@ -39,7 +38,7 @@
     .btn-com{
         width:80px;
         height: 30px;
-        margin:0px;
+        margin:0;
     }
     .cmt{
         display:grid;
@@ -48,61 +47,84 @@
  </style>
 {% block content %}
     <script>
-        //{#% url 'post_remove' pk=post_key.pk %#}
-        function post_remove() {
-            var result = confirm("Post를 삭제하시겠습니까?");
+        function file_remove() {
+            var result = confirm("파일을 삭제하시겠습니까?");
             if(result){
-                var remove_url = "{% url 'post_remove' pk=post_key.pk %}";
+                var remove_url = "{% url 'file_remove' pk=post_key.pk %}";
                 document.location.href = remove_url;
             }
         }
+
+        const comment_update = (id) => {
+            let comment_update = document.querySelector(`.comment_update${id}`);
+            let comment_edit = document.querySelector(`.comment_edit${id}`);
+            let edit_cancel = document.querySelector(`.edit_cancel${id}`);
+            let edit_box = document.querySelector('.edit_box${id}');
+
+            console.log(comment_update);
+            comment_update.style.display = 'none';
+            comment_edit.style.display = 'inline-block';
+            edit_cancel.style.display = 'inline-block';
+            edit_box.style.display ='block';
+}
     </script>
-    <div class="post">
+    <div class="detail">
         <div id="file">
-            <h2>{{ 전공프로젝트 }}</h2>
-            <h4>{{ 원민재 }} 님이 {{ file.fileUpload }}에 업로드</h4>
+            <h2>{{ file.file }}</h2>
+            <h4>{{ file.owner }} 님이 {{ file.fileUpload }}에 업로드</h4>
             {% for guest in guest_list %}
-		        <h4> {{ file.guestName }} </h4>
+		        <h4> {{ file.guest }} </h4>
             {% empty %}
             	<h4> 나만 보기 </h4>
             {% endfor %}
             <textarea rows="2" class="guest_inbox_text"></textarea>
-            <input class="btn-guest" type="submit" value="추가"></center>
+            <input class="btn-guest" type="submit" value="추가">
         </div>
         <div id="button">
             <div id="down-btn">
                 <a class="btn-down" href="{% url '' %}">
                     <button id="btn-down" type="submit" class="save btn btn-primary">다운로드</button></a>
             </div>
+            {% if user.is_authenticated %}
             <div id="edit-btn">
                 <p><a class="btn-edit" href="{% url 'file_edit' pk=file_key.pk %}">
                     <button id="btn-edit" type="submit" class="save btn btn-primary">수정</button></a>
                     <a class="btn-remove" href="#" onclick="file_remove()">
                         <button id="btn-remove" type="submit" class="save btn btn-primary">삭제</button></a></p>
             </div>
+            {% endif %}
         </div>
     </div>
+    <br>
     <div class="comment">
-        <br>
-        <form method="POST">
         {% csrf_token %}
-            <h4>comment</h4>
+            <h4>댓글</h4>
             <center><textarea rows="2" class="comment_inbox_text"></textarea>
             <input class="btn-com" type="submit" value="등록"></center>
-        </form>
         <hr width="95%">
         {% for comment in comments%}
         <div class="cmt">
             <div id="cmt-body">
-                <h3>{{comment.body}}</h3>
+                <h4><strong>{{comment.author}}</strong></h4>
+                <h4>{{comment.body}}</h4>
+                <input type="text" class="edit-box{{ comment.id }}" value="{{ comment.body }}" style="display:none">
             </div>
             <div id="cmt-footer">
+                {% if user.is_authenticated %}
+                    <div id="edit-btn">
+                        <input type="button" value="수정" onclick="comment_update({{ comment.id }})"></span></a>
+                        <input type="button" class="comment_edit{{ comment.id }}" value="완료" onclick="comment_edit({{ comment.id }})" style="display:none">
+                        <input type="button" class="edit_cancel{{ comment.id }}"  value="취소" onclick="edit_cancel({{ comment.id }})" style="display:none">
+                        <a class="btn-remove" href="{% url 'comment_remove' pk=comment.pk %}">
+                            <input type="button" value="삭제"></a>
+                    </div>
+                {% endif %}
                 <h5>{{comment.date}}</h5>
-                <h4>{{user.username}}</h4>
             </div>
         </div>
+        {% empty %}
+        <h4>댓글이 없습니다.</h4>
+        {% endfor %}
     </div>
-{% endfor %}
-
 {% endblock %}
 </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% extends 'base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <style>
+        textarea{
+            width: 300px;
+            height: 40px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+{% block content %}
+    <h3>파일 수정</h3>
+    <form method='POST'>
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+            <tr>
+                <td colspan="2"><center><button type="submit">수정 완료</button></center></td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>
