@@ -28,14 +28,15 @@ class UserInfo(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=30)
-    images = models.CharField()
-    phone_num = models.Charfield(max_length=15)
+    images = models.TextField()
+    phone_num = models.CharField(max_length=15)
 
 class FileDetailInfo(models.Model):
     _id = models.ObjectIdField()
     file_title = models.CharField(max_length=50)
     file_upload = models.DateField()
-    file_images = models.CharField()
+    file_images = models.TextField()
+    file_url = models.TextField()
     owner = models.EmbeddedField(
         model_container=Owner
     )
