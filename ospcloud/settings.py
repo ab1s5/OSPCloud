@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': 'admin',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': '35.160.38.122',
+            'host': '35.88.97.100',
             'port': 27017,
             'username': 'root',
             'password': 'ospcloud0519',
