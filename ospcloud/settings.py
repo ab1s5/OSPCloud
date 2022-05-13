@@ -73,6 +73,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ospcloud.wsgi.application'
 
+# import mongoengine
+# mongoengine.connect(db='ospcloud', host='35.160.38.122', username='root', password='ospcloud0519')
+
 # MONGODB_DATABASES = {
 #     "default": {
 #         "name": 'ospcloud',
@@ -93,7 +96,7 @@ DATABASES = {
     # }
      'default': {
         'ENGINE': 'djongo',
-        'NAME': 'ospcloud',
+        'NAME': 'admin',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
             'host': '35.160.38.122',
@@ -105,6 +108,7 @@ DATABASES = {
         }, 
     }
 }
+
 
 
 # Password validation
