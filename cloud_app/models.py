@@ -19,6 +19,7 @@ class Comment(models.Model):
     _id = models.ObjectIdField()
     comment_name = models.CharField(max_length=50)
     comment_date = models.DateField()
+    comment_text = models.TextField()
 
     class Meta:
         abstract = True
@@ -36,7 +37,7 @@ class FileDetailInfo(models.Model):
     file_title = models.CharField(max_length=50)
     file_upload = models.DateField()
     file_images = models.TextField()
-    file_url = models.TextField()
+    file_url = models.FileField(upload_to='directory/')
     owner = models.EmbeddedField(
         model_container=Owner
     )
