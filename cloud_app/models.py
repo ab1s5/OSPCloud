@@ -1,6 +1,6 @@
 from djongo import models
 from django.utils import timezone
-from django.conf import settings
+
 
 # from django import forms
 
@@ -19,6 +19,7 @@ class FileDetailInfo(models.Model):
     _id = models.ObjectIdField()
     file_title = models.CharField(max_length=50)
     file_upload = models.DateField(default=timezone.now)
+    file_images = models.TextField()
     file_url = models.FileField(upload_to='directory/')
     owner_name = models.CharField(max_length=50)
     guest_name = models.CharField(max_length=50)
@@ -37,7 +38,6 @@ class FileDetailInfo(models.Model):
 
 class Comment(models.Model):
     file_detail = models.ForeignKey(FileDetailInfo, related_name='comments', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comment_name = models.CharField(max_length=50)
     comment_date = models.DateField(default=timezone.now)
     comment_text = models.TextField()
