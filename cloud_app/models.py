@@ -20,7 +20,7 @@ class FileDetailInfo(models.Model):
     file_title = models.CharField(max_length=50)
     file_upload = models.DateField(default=timezone.now)
     file_url = models.FileField(upload_to='directory/')
-    owner_name = models.CharField(max_length=50)
+    owner_name = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     guest_name = models.CharField(max_length=50)
     # comments = models.ForeignKey(Comment, on_delete=models.CASCADE)
     # comment_name = models.CharField(max_length=50)
