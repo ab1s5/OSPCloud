@@ -10,8 +10,7 @@ from django.conf import settings
 class UserInfo(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=50)
-    email = models.CharField(max_length=30)
-    images = models.TextField()
+    email = models.CharField(max_length=30, unique=True)
     phone_num = models.CharField(max_length=15)
 
 
@@ -21,7 +20,7 @@ class FileDetailInfo(models.Model):
     file_upload = models.DateField(default=timezone.now)
     file_url = models.FileField(upload_to='directory/')
     owner_name = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    guest_name = models.CharField(max_length=50)
+    guest_name = models.CharField(max_length=50, null=True)
     # comments = models.ForeignKey(Comment, on_delete=models.CASCADE)
     # comment_name = models.CharField(max_length=50)
     # comment_date = models.DateField()
