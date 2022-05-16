@@ -41,9 +41,8 @@ def sign_up(request: HttpRequest) -> HttpResponse:
         if UserInfo.objects.filter(email=name):
             messages.error(request, "email is already in use")
             return render(request, 'signup.html')
-        image = 'asdf'
         phone_num = '1234'
-        user = UserInfo(name=name, email=email, images=image, phone_num=phone_num)
+        user = UserInfo(name=name, email=email, phone_num=phone_num)
         user.save()
         return redirect('../login/')
 
