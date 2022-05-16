@@ -145,27 +145,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_GOOGLE_PLUS_KEY = '806999554154-c8o7u3jduu03fnrto1aph9idtu50gn05.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_PLUS_SECRET = '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'
-AUTHENTICATION_BACKENDS = ( 'social_core.backends.google.GooglePlusAuth', )
-SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.social_auth.social_details',
-    'social_core.pipeline.social_auth.social_uid',
-    'cloud_app.views.auth_allowed',
-    'cloud_app.views.social_user',
-    'social_core.pipeline.social_auth.associate_by_email',
-    'social_core.pipeline.user.create_user',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-    'social_core.pipeline.user.user_details',
-)
-
-LOGIN_REDIRECT_URL = '/google/page/index'
