@@ -17,13 +17,13 @@ def index(request):
 
 def login(request: HttpRequest) -> HttpResponse:
     if request.method == 'GET':
+        print(bool(UserInfo.objects.filter(name='nothing')))
         return render(request, 'login.html')
     elif request.method == 'POST':
         # name = request.POST.get('name', None)
-        name = 'test'
-        password = request.POST.get('password', None)
-        user = UserInfo.objects.get(name=name)
-        if check_password(password, user):
+        name = 'aaaa'
+        # password = request.POST.get('password', None)
+        if UserInfo.objects.filter(name=name).exists():
             request.session['name'] = name
             return redirect('../home/')
 
@@ -49,20 +49,20 @@ def sign_up(request: HttpRequest) -> HttpResponse:
 
 
 def home(request: HttpRequest):
-    name = request.session.get('name')
-    print("session >>", request.session.get('name'))
-    print("user_id >>")
     if check_session(request):
+        name = request.session.get('name')
+        print("session >>", request.session.get('name'))
         print("logged in")
+        return render(request, 'home.html', {'name': name})
     else:
         print("not logged in")
-    return render(request, 'home.html', {'name': name})
-
-
-def check_password(pw, user: UserInfo):
-    # return pw == user.password
-    return True
+        return render(request, 'home.html')
 
 
 def check_session(request: HttpRequest):
-    return bool(UserInfo.objects.filter(name=request.session['name']))
+    return bool(UserInfo.objects.filter(name=request.session.get('name')))
+
+
+def logout(request):
+    request.session.flush()
+    return redirect('../home/')
