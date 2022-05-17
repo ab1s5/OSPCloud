@@ -1,17 +1,18 @@
-# from django import forms
-
 from djongo import models
 from django.utils import timezone
+
+# from django import forms
+
 
 # Create your models here.
 
 class UserInfo(models.Model):
-    _id = models.ObjectIdField(unique=True)
+    # _id = models.ObjectIdField(unique=True)
     name = models.CharField(max_length=50)
     email = models.CharField(primary_key=True, max_length=30, unique=True)
     phone_num = models.CharField(max_length=15)
    
-    object = models.DjongoManager()
+    objects = models.DjongoManager()
 
     def __str__(self):
         return self.name
@@ -23,8 +24,16 @@ class FileDetailInfo(models.Model):
     file_url = models.FileField(upload_to='directory/')
     owner_name = models.ForeignKey('UserInfo', to_field='email', on_delete=models.CASCADE)
     guest_name = models.CharField(max_length=50, null=True)
+    # comments = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    # comment_name = models.CharField(max_length=50)
+    # comment_date = models.DateField()
+    # comment_text = models.TextField()
+    # comment = models.ArrayField(
+    #     model_container=Comment,
+    #     # model_form_class=CommentForm
+    # )
 
-    object = models.DjongoManager()
+    objects = models.DjongoManager()
 
     def __str__(self):
         return self.file_title
@@ -35,5 +44,12 @@ class Comment(models.Model):
     comment_name = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     comment_date = models.DateField(default=timezone.now)
     comment_text = models.TextField(null=False)
+    #     class Meta:
+    #     abstract = True
 
-    object = models.DjongoManager()
+    objects = models.DjongoManager()
+
+# class CommentForm(forms.ModelForm):
+#     class Meta:
+#         model = Comment
+#         fields = ('comment_name', 'comment_date', 'comment_text')
