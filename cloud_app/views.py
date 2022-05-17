@@ -175,8 +175,20 @@ def main(request: HttpRequest):
         print(user.name)
         print("logged in")
         files = FileDetailInfo.objects.filter(owner_name=user.email).order_by('-file_upload')
-        print(files)
-        context = {'files': files, 'userinfo': user}
+        print("files >> ", files)
+        all_files = FileDetailInfo.objects.all()
+        print("all_files >> ", all_files)
+        shared_files = []
+        for file in all_files:
+            guests = file.guest_name.strip().split(",")
+            for guest in guests:
+                guest = guest.strip()
+                if name == guest:
+                    shared_files.append(file)
+                elif user.email == guest:
+                    shared_files.append(file)
+        print("shared_files >> ", shared_files)
+        context = {'files': files, 'userinfo': user, 'shared_files': shared_files}
         return render(request, 'cloud/main.html', context)
     else:
         print("not logged in")

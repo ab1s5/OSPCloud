@@ -47,7 +47,10 @@
     <br>
     <div class="file-zone2">
         <table>
-        {% for file in files %}
+        {% for file in shared_files %}
+            <a href="{% url 'file_detail' pk=file.pk %}">
+                    {{ file.file_title }}
+            </a>
 <!--        {% if me in file.guest_name.all %}-->
             <tr><a href="{% url 'file_detail' pk=file.pk %}">
                 <td><h4 class="fw-bolder">{{ file.file_title }}</h4></td>
