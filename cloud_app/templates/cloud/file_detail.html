@@ -114,59 +114,46 @@
     </script>
     <div class="detail">
         <div id="file">
-            <h2>{{ file.file_title }}</h2>
+            <h2>파일명 : {{ file.file_title }}</h2>
             <h4>{{ file.owner_name }} 님이 {{ file.file_upload }}에 업로드</h4>
             <br>
-            {% for guest_name in guest_names %}
-		        {{ file.guest_name }}
+            공유받은사람 :
+            {% for guest in guests %}
+		        {{ guest }}
             {% empty %}
             	<h4> 나만 보기 </h4>
             {% endfor %}
         </div>
         <div id="button">
-            <div id="down-btn">
-                <a class="btn-down" href="file.file_url.name">
-                    <button id="btn-down" type="submit" class="save btn btn-primary">다운로드</button></a>
-            </div>
-            {% if user.is_authenticated %}
-            <div id="edit-btn">
-                <p><a class="btn-edit" href="{% url 'file_edit' pk=file.pk %}">
-                    <button id="btn-edit" type="submit" class="save btn btn-primary">수정</button></a>
-                    <a class="btn-remove" href="#" onclick="file_remove()">
-                        <button id="btn-remove" type="submit" class="save btn btn-primary">삭제</button></a></p>
-            </div>
-            {% endif %}
+            <a class="btn-edit" href="{% url 'file_edit' pk=file.id %}">
+                <button id="btn-edit" type="submit" class="save btn btn-primary">수정</button></a>
+            <a class="btn-remove" href="#" onclick="file_remove()">
+                <button id="btn-remove" type="submit" class="save btn btn-primary">삭제</button></a>
+            <br>
+            <a class="btn-down" href="file.file_url.name">
+                <button id="btn-down" type="submit" class="save btn btn-primary">다운로드</button></a>
+
         </div>
     </div>
     <br>
     <div class="comment">
-        {% csrf_token %}
             <h4>댓글</h4>
-            <form method="POST" action="{% url 'add_comment' pk=file.pk%}">
-                {% csrf_token %}
-                {{ comment_form }}
+        {% csrf_token %}
+            <form method="POST" action="{% url 'add_comment' pk=file.id%}">
+                <input type="text" class="comment-box">
                 <input class="com_btn" type="submit" value="작성">
             </form>
-        <hr width="95%">
+        <hr width="100%">
         {% for comment in comments %}
-        <br>
         <div class="cmt">
             <div id="cmt-body">
-                <h4><strong>{{ comment.comment_name }}</strong></h4>
+                <h4>{{ comment.comment_name }}</h4>
                 <h4>{{ comment.comment_text }}</h4>
                 <h5>{{comment.comment_date}}</h5>
-                <input type="text" class="edit_box{{ comment.id }}" value="{{ comment.comment_text }}" style="display:none">
             </div>
-            <div id="cmt-footer">
-                {% if user.is_authenticated %}
-                    <div id="edit_btn">
-                        <span class="CommentUpdate{{ comment.id }}"><input type="button" value="수정" onclick="comment_update({{ comment.id }})"></span>
-                        <span class="CommentEdit{{ comment.id }}"  style="display:none"><input type="button" value="완료" onclick="commentEdit({{ comment.id }})"></span>
-                        <span class="EditCancel{{ comment.id }}"  style="display:none"><input type="button" value="취소" onclick="editCancel({{ comment.id }})"></span>
-                        <a class="btn-remove" href="{% url 'remove_comment' pk=comment.pk %}">
-                            <input type="button" value="삭제"></a>
-                    </div>
-                {% endif %}
+            <div id="edit_btn">
+                <a class="btn-edit" href="{% url 'comment_edit' pk=comment. %}"><input type="button" value="수정"></a>
+                <a class="btn-remove" href="{% url 'remove_comment' pk=comment.id %}"><input type="button" value="삭제"></a>
             </div>
         </div>
         <br><hr>

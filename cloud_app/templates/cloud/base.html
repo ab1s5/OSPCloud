@@ -9,9 +9,11 @@
 <!--    <link rel="stylesheet" type="text/css" href="{%static 'css/styles.css' %}">-->
 <!--    <link rel="stylesheet" type="text/css" href="{%static 'css/styles2.css' %}">-->
     <style>
+        .file-list {
+            height:70px;
+        }
         .file-zone {
-            width: 500px;
-            margin: 0 auto;
+            margin : 30px 30px 50px 0;
         }
         .content_container{
             margin :0;
@@ -129,6 +131,42 @@
             bottom: 0;
             left: 100px;
         }
+        .comment-box{
+            margin : 10px;
+            width:85%;
+        }
+        .comment{
+            margin:20px 70px 20px 20px;
+            padding:50px 0 0 0;
+        }
+        #button{
+            float:right;
+            margin : 0 50px 0 0 ;
+            width : 150px;
+            height : 110px;
+        }
+        #btn-down{
+            width:150px;
+            height:70px;
+        }
+        #btn-remove {
+            width:75px;
+            height:40px;
+        }
+        #btn-edit{
+            width:75px;
+            height:40px;
+        }
+        .cmt{
+            margin: 10px;
+        }
+        #cmt-body {
+            height:70px;
+        }
+        .upload-btn{
+            width: 100px;
+            height: 45px;
+        }
     </style>
 </head>
 <body>
@@ -138,12 +176,13 @@
 </div>
 <div id="main">
     <div class="profile">
-        <h4> {{ userinfo.name }} </h4>
-        <h5> {{ userinfo.email }} </h5>
+        <center><h3> 안녕하세요 </h3></center>
+        <center><h2> {{ userinfo.name }} 님 </h2></center>
+        <center><h3> {{ userinfo.email }} </h3></center>
         <br><br>
         <h4>
-            <center><a href="{% url 'user_edit' %}">회원정보수정</a>&nbsp;&nbsp;
-                <a href="{% url 'logout' %}">로그아웃</a></center>
+<!--            <a href="{% url 'user_edit' %}">회원정보수정</a>&nbsp;&nbsp;-->
+            <center><a href="{% url 'logout' %}">로그아웃</a></center>
         </h4>
     </div>
     <div class="content_container">

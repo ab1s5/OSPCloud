@@ -6,7 +6,7 @@
 <body>
 {% block content %}
     <h3>파일 업로드</h3>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <center><button type="submit">파일업로드</button></center>
