@@ -8,6 +8,7 @@ from django.utils import timezone
 
 class UserInfo(models.Model):
     # _id = models.ObjectIdField(unique=True)
+    id = models.IntegerField(primary_key=False)
     name = models.CharField(max_length=50)
     email = models.CharField(primary_key=True, max_length=30, unique=True)
     phone_num = models.CharField(max_length=15)

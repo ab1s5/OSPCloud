@@ -174,7 +174,8 @@ def main(request: HttpRequest):
         user = UserInfo.objects.filter(name=request.session.get('name')).get()
         print(user.name)
         print("logged in")
-        files = FileDetailInfo.objects.filter(owner=user.email).order_by('-file_upload')
+        files = FileDetailInfo.objects.filter(owner_name=user.email).order_by('-file_upload')
+        print(files)
         context = {'files': files, 'userinfo': user}
         return render(request, 'cloud/main.html', context)
     else:
