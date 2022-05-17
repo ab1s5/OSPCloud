@@ -1,0 +1,58 @@
+{% extends 'cloud/base.html' %}
+{% load static %}
+<html lang="ko">
+<meta charset="UTF-8">
+<style>
+
+</style>
+{% block content %}
+<div class="container">
+    <a href="{% url 'file_upload' %}" class="top-menu" >
+                <button type="submit" class="save btn btn-primary">업로드</button></a>
+    <h2>업로드 파일</h2>
+    <br>
+    <div class="file-zone">
+        <table>
+            {% for file in files %}
+<!--                {% if user == file.owner %}-->
+                <tr><a href="{% url 'file_detail' pk=file.pk %}">
+                    <td><h4 class="fw-bolder">{{ file.file_title }}</h4></td>
+                    <h5> {{ file.file_upload }} </h5></td>
+                    <td>
+                        {% for guest in file.guest.all %}
+                        <h5> {{ guest.count }}명에게 공유 </h5>
+                        {% empty %}
+                        <h5> 나만보기 </h5>
+                        {% endfor %}
+                    </td>
+                </a></tr>
+<!--            {% endif %}-->
+            <br>
+            {% empty %}
+            <br><br>
+            <center><h4>업로드 파일이 없습니다</h4></center>
+            <br><br>
+            {% endfor %}
+        </table>
+    </div>
+    <br><br>
+    <h2>공유받은 파일</h2>
+    <br>
+    <div class="file-zone2">
+        <table>
+        {% for file in files %}
+<!--        {% if me in file.guest_name.all %}-->
+            <tr><a href="{% url 'file_detail' pk=file.pk %}">
+                <td><h4 class="fw-bolder">{{ file.file_title }}</h4></td>
+                <td><h5> {{ file.file_upload }} </h5></td>
+                <td><h5> {{ file.owner }} 님이 공유 </h5></td>
+            </a></tr>
+<!--        {% endif %}-->
+        {% empty %}
+        <br><br>
+        <center><h4>공유받은 파일이 없습니다</h4></center>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
