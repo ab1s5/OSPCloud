@@ -43,10 +43,13 @@ def file_upload(request):
         print('aaaaaaa')
         print('id')
         print('bbbbbbb')
-        id=1
-        for x in range(1, 100):
-            id+= 1
-            id.insert_one({"id": id})
+        id = 1
+        files = FileDetailInfo.objects.all()
+        maxid = 0
+        for file in files:
+            maxid = max(maxid, file.id)
+        id = maxid + 1
+        print(id)
         file_title = request.POST['file_title']
         guest_name = request.POST['guest_name']
         file_url = request.FILES.get('file_url')
