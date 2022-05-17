@@ -8,7 +8,7 @@
             background-color: darkslategrey;
         }
         .page{
-            position:center;
+            text-align: center;
         }
     </style>
 </head>
@@ -16,28 +16,37 @@
 <div class="page">
     <div class="row my-3">
         <div class="col-4">
-            <h2>회원가입</h2>
+            <br><br><br><br><br><br>
+            <h1>회원가입</h1>
         </div>
         <div class="col-8 text-right">
+            <br>
             <span>또는 <a href="{% url 'login' %}">로그인하세요</a></span>
         </div>
     </div>
+    <br><br>
     <form method="post" class="signup-form">
         {% csrf_token %}
         <div class="form-group">
             <label for="name">사용자 이름</label>
+            <br>
             <input type="text" class="form-control" name="name" id="name"
                    value="{{ form.name.value|default_if_none:''}}">
+            <br><br>
         </div>
         <div class="form-group">
             <label for="email">이메일</label>
+            <br>
             <input type="text" class="form-control" name="email" id="email"
                    value="{{ form.email.value|default_if_none:''}}">
+            <br><br>
         </div>
         <div class="form-group">
             <label for="phone_num">휴대폰번호</label>
+            <br>
             <input type="text" class="form-control" name="phone_num" id="phone_num"
                    value="{{ form.phone_num.value|default_if_none:''}}">
+            <br><br>
         </div>
         <button type="submit" class="btn btn-primary">회원가입완료</button>
     </form>

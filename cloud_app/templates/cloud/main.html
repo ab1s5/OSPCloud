@@ -35,7 +35,7 @@
     <div class="file-zone">
         {% for file in shared_files %}
         <div class="file-list">
-            <a href="">
+            <a href="{% url 'file_detail' pk=file.id %}">
                 <h4 class="fw-bolder">{{ file.file_title }}</h4>
                 <h5> {{ file.file_upload }} </h5>
                 <h5> {{ file.owner_name }} 님이 공유 </h5>
