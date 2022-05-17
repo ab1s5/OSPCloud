@@ -19,8 +19,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 # from cloud.forms import FileUploadForm, UserForm, FileEditForm
 from django.template.defaulttags import comment
 
-from cloud_app.forms import UserForm, FileUploadForm, UserEditForm, FileEditForm, CommentForm
-from cloud_app.models import FileDetailInfo, Comment, UserInfo
+from .forms import UserForm, FileUploadForm, UserEditForm, FileEditForm, CommentForm
+from .models import FileDetailInfo, Comment, UserInfo
 
 
 # 본인 업로드, 공유받은 파일 리스트 출력
@@ -171,9 +171,11 @@ def sign_up(request: HttpRequest) -> HttpResponse:
 def main(request: HttpRequest):
     if check_session(request):
         name = request.session.get('name')
+        user = UserInfo.objects.filter(name=request.session.get('name')).get()
+        print(user.name)
         print("logged in")
         files = FileDetailInfo.objects.order_by('-file_upload')
-        context = {'files': files}
+        context = {'files': files, 'userinfo': user}
         return render(request, 'cloud/main.html', context)
     else:
         print("not logged in")
