@@ -1,0 +1,16 @@
+{% extends 'cloud/base.html' %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% block content %}
+    <h3>파일 업로드</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <center><button type="submit">파일업로드</button></center>
+    </form>
+{% endblock %}
+</body>
+</html>

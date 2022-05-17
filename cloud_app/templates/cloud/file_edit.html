@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% extends 'cloud/base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <style>
+        textarea{
+            width: 300px;
+            height: 40px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+{% block content %}
+    <h3>파일 수정</h3>
+    <form method='POST'>
+        {% csrf_token %}
+            {{form.as_p}}
+            <center><button type="submit">수정 완료</button></center>
+    </form>
+{% endblock %}
+</body>
+</html>
