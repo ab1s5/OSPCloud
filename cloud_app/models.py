@@ -42,7 +42,7 @@ class FileDetailInfo(models.Model):
 
 class Comment(models.Model):
     file_detail = models.ForeignKey('FileDetailInfo', to_field='id', on_delete=models.CASCADE)
-    comment_name = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    comment_name = models.ForeignKey('User', on_delete=models.CASCADE)
     comment_date = models.DateField(default=timezone.now)
     comment_text = models.TextField(null=False)
     #     class Meta:

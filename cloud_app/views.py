@@ -133,7 +133,7 @@ def add_comment(request, pk):
     # file = fileDetailInfo.objects.filter(file.id=pk)
     if request.method == 'POST':
         form = CommentForm(request.POST, request.session)
-        comment_text = request.POST['comment_text']
+        comment_text = request.POST.get('comment_text')
         file_detail = FileDetailInfo.id
         comment_name = user
         comment = Comment(
