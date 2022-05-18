@@ -1,0 +1,128 @@
+{% extends 'cloud/base.html' %}
+{% load static %}
+<html lang="ko">
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<style>
+    .cmt{
+        display:grid;
+        grid-template-columns: 1fr 200px;
+    }
+    #cmt-body{
+        width: 300px;
+    }
+    #cmt-footer{
+        widh: 200px;
+    }
+    .detail{
+        display:grid;
+        grid-template-columns: 1fr 300px;
+    }
+    #file{
+        padding:20px;
+    }
+    #btn-down{
+        width:165px;
+        height: 70px;
+    }
+
+    #btn-edit {
+        width: 80px;
+        height: 40px;
+    }
+    #btn-remove {
+        width: 80px;
+        height: 40px;
+    }
+    #com {
+        width: 80%;
+        height: 20px;
+        border: black;
+        resize: none;
+    }
+    .guest_inbox_text{
+        width: 80%;
+        height:20px;
+        border: black;
+        resize:none;
+    }
+    .com_btn{
+        width:80px;
+        height: 30px;
+        margin:0;
+    }
+    .cmt{
+        display:grid;
+        grid-template-columns: 1fr 300px;
+    }
+ </style>
+{% block content %}
+    <script>
+        function file_remove() {
+            var result = confirm("파일을 삭제하시겠습니까?");
+            if(result){
+                var remove_url = "{% url 'file_remove' pk=file.pk %}";
+                document.location.href = remove_url;
+            }
+        }
+    </script>
+    <div class="detail">
+        <div id="file">
+            <h2>파일명 : {{ file.file_title }}</h2>
+            <h4>{{ file.owner_name }} 님이 {{ file.file_upload }}에 업로드</h4>
+            <br>
+            공유받은사람 :
+            {% for guest in guests %}
+		        {{ guest }}
+            {% empty %}
+            	<h4> 나만 보기 </h4>
+            {% endfor %}
+        </div>
+        <div id="button">
+            {% if userinfo.name|stringformat:'s' == file.owner_name|stringformat:'s' %}
+            <a class="btn-edit" href="{% url 'file_edit' pk=file.id %}">
+                <button id="btn-edit" type="submit" class="save btn btn-primary">수정</button></a>
+            <a class="btn-remove" href="#" onclick="file_remove()">
+                <button id="btn-remove" type="submit" class="save btn btn-primary">삭제</button></a>
+            <br>
+            {% endif %}
+<<<<<<< HEAD
+            <a class="btn-down" href="https://ospcloud-filestorage.s3.us-west-2.amazonaws.com/{filename}'.format(filename = file.file_url.name)">
+=======
+            <a class="btn-down" href="file.file_url.name">
+>>>>>>> 6e46fd9b24c56164c8d09d6b92b1648d21a8ab7b
+                <button id="btn-down" type="submit" class="save btn btn-primary">다운로드</button></a>
+        </div>
+    </div>
+    <br>
+    <div class="comment">
+        <h4>댓글</h4>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+{#            {{form.as_p}}#}
+            <input name="body" type="text" class="comment-box" value="">
+            <input class="com_btn" type="submit" value="작성">
+        </form>
+        <hr width="100%">
+        {% for comment in comments %}
+        <div class="cmt">
+            <div id="cmt-body">
+                <h4>{{ comment.comment_name }}</h4>
+                <h4>{{ comment.comment_text }}</h4>
+                <h5>{{comment.comment_date}}</h5>
+            </div>
+            <br>
+            <div id="edit_btn">
+                {% if userinfo.name|stringformat:'s' == comment.comment_name|stringformat:'s' %}
+{#                <a class="btn-edit" href="{% url 'comment_edit' pk=comment.id %}"><input type="button" value="수정"></a>#}
+                <a class="btn-remove" href="{% url 'remove_comment' pk=comment.id %}"><input type="button" value="삭제"></a>
+                {% endif %}
+            </div>
+        </div>
+        <br><hr>
+        {% empty %}
+        <h4>댓글이 없습니다.</h4>
+        {% endfor %}
+    </div>
+{% endblock %}
+</html>

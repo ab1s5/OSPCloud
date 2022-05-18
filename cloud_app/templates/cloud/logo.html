@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: darkslategrey;
+        }
+        .page{
+            position:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="page" id="logo">
+        <br><br><br><br><br><br>
+            <h1><a href="{% url 'main' %}">
+                <center>OSP Cloud</center>
+            </a></h1>
+            <br><br><br><br>
+            <center><a href="{% url 'login' %}">
+                <button type="button" class="save btn btn-primary">로그인</button>
+            </a>
+            <a href="{% url 'sign_up' %}">
+                <button type="button" class="save btn btn-primary">회원가입</button>
+            </a></center>
+    </div>
+</body>
+</html>

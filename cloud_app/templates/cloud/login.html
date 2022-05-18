@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: darkslategrey;
+        }
+        .post-form{
+            text-align: center;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <form method="post" class="post-form" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <br><br><br><br><br><br><br><br>
+            <strong><label for="name">사용자이름</label></strong>
+            <br><br>
+            <input type="text" class="form-control" name="name" id="name" value="{{ form.name.value|default_if_none:''}}">
+        </div>
+        <br><br><br>
+        <button type="submit" class="btn btn-primary">로그인</button>
+    </form>
+</div>
+</body>
+</html>

@@ -8,6 +8,7 @@ from django.utils import timezone
 
 class UserInfo(models.Model):
     # _id = models.ObjectIdField(unique=True)
+    id = models.IntegerField(primary_key=False)
     name = models.CharField(max_length=50)
     email = models.CharField(primary_key=True, max_length=30, unique=True)
     phone_num = models.CharField(max_length=15)
@@ -41,7 +42,7 @@ class FileDetailInfo(models.Model):
 
 class Comment(models.Model):
     file_detail = models.ForeignKey('FileDetailInfo', to_field='id', on_delete=models.CASCADE)
-    comment_name = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    comment_name = models.ForeignKey('UserInfo', to_field='email', on_delete=models.CASCADE)
     comment_date = models.DateField(default=timezone.now)
     comment_text = models.TextField(null=False)
     #     class Meta:

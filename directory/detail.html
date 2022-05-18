@@ -1,0 +1,46 @@
+{% extends '/base.html' %}
+
+{% block content %}
+    <script>
+        //{#% url 'post_remove' pk=post_key.pk %#}
+        function post_remove() {
+            var result = confirm("Post를 삭제하시겠습니까?");
+            if(result){
+                var remove_url = "{% url 'post_remove' pk=post_key.pk %}";
+                document.location.href = remove_url;
+            }
+        }
+    </script>
+    <div class="post">
+        <div class="date">
+            <p><h2>{{ file.filename }}</h2></p>
+            <p><h4>{{ file.uploader }} 님이 업로드</h2></p>
+            {% for user in reciever_list %}
+		<p><h4>{{ file.reciever }} </h4><
+            {% empty %}
+            	<p><h4> 나만 보기 </h4></p>
+            {% endfor %}
+            <p><h2>{{ file.create_date }}</h2></p>
+            <a class="btn btn-default" href="{% url '' %}">
+        		<button type="submit" class="save btn btn-primary">다운로드</button>
+            <a class="btn btn-default" href="{% url 'file_edit' pk=file_key.pk %}">
+        		<button type="submit" class="save btn btn-primary">수정</button>
+            <a class="btn btn-default" href="#" onclick="file_remove()">
+        		<button type="submit" class="save btn btn-primary">삭제</button>
+
+	<br></br>
+  	<form method="POST">
+   	 {% csrf_token %}
+	    <textarea rows="1" class="comment_inbox_text" height: 18px;"></textarea>
+	    <input class="btn btn-primary" type="submit" value="등록">
+ 	 </form>
+
+ 	 {% for comment in comments%}	 
+ 		{{comment.body}} - {{comment.date}} - {{user.username}}
+	
+  	<p><br></p>
+  	{% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

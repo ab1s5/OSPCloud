@@ -1,0 +1,51 @@
+{% extends 'cloud/base.html' %}
+{% load static %}
+<html lang="ko">
+<meta charset="UTF-8">
+<style>
+
+</style>
+{% block content %}
+<div class="container">
+    <a href="{% url 'file_upload' %}" class="top-menu" >
+                <button type="submit" class="upload-btn">업로드</button></a>
+    <h2>업로드 파일</h2>
+    <div class="file-zone">
+            {% for file in files %}
+            <div class="file-list">
+                <a href="{% url 'file_detail' pk=file.id %}">
+                    <h4 class="fw-bolder">{{ file.file_title }}</h4>
+                    <h5> {{ file.file_upload }} </h5></td>
+                    {% if file.guest_name == None %}
+                    <h5>나만보기</h5>
+                    {% else %}
+                    <h5>공유파일</h5>
+                    {% endif %}
+                </a>
+            </div>
+            <hr>
+            {% empty %}
+            <br>
+            <center><h4>업로드 파일이 없습니다</h4></center>
+            <br><br>
+            {% endfor %}
+    </div>
+    <br>
+    <h2>공유받은 파일</h2>
+    <div class="file-zone">
+        {% for file in shared_files %}
+        <div class="file-list">
+            <a href="{% url 'file_detail' pk=file.id %}">
+                <h4 class="fw-bolder">{{ file.file_title }}</h4>
+                <h5> {{ file.file_upload }} </h5>
+                <h5> {{ file.owner_name }} 님이 공유 </h5>
+            </a>
+            <hr>
+        {% empty %}
+        <br>
+        <center><h4>공유받은 파일이 없습니다</h4></center>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>OSP Cloud</title>
+    <link rel="stylesheet" href="https://fonts.google.com/specimen/Black+Han+Sans?subset=korean">
+<!--    <link rel="stylesheet" type="text/css" href="{%static 'css/style.css' %}">-->
+<!--    <link rel="stylesheet" type="text/css" href="{%static 'css/styles.css' %}">-->
+<!--    <link rel="stylesheet" type="text/css" href="{%static 'css/styles2.css' %}">-->
+    <style>
+        #edit_btn {
+            float:left;
+        }
+        .file-list {
+            height:70px;
+        }
+        .file-zone {
+            margin : 30px 30px 50px 0;
+        }
+        .content_container{
+            margin :0;
+            border-left : whitesmoke;
+        }
+        .container{
+            margin-left : 10px;
+            padding : 20px;
+            border-left : whitesmoke;
+        }
+        .card {
+            display: inline-block;
+            flex-direction: column;
+            word-wrap: break-word;
+            background-color: darkgrey;
+            background-clip: border-box;
+            border: 1px solid antiquewhite;
+            border-radius: 0.25rem;
+            vertical-align: top;
+            width: 150px;
+            height: 150px;
+        }
+        body {
+            background-color: darkslategrey;
+        }
+
+        .page-header {
+            margin-top: 0;
+            padding: 20px 20px 20px 40px;
+            color:whitesmoke;
+            border-bottom: whitesmoke;
+        }
+
+        #main {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            border-top: whitesmoke;
+        }
+
+        .profile {
+            width: 200px;
+            margin: 0;
+            padding: 40px;
+            border-top: 1px whitesmoke;
+        }
+
+        h4, h5, h6 {
+            color: black;
+            margin: 10px;
+            padding: 0;
+        }
+
+
+        .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+            color: #ffffff;
+            font-size: 36pt;
+            text-decoration: none;
+        }
+
+        .content {
+            margin-left: 40px;
+        }
+
+        h1, h2, h3{
+            color: whitesmoke;
+        }
+
+        href {
+            color:lightyellow;
+            border: lightyellow;
+        }
+
+        .date {
+            color: #828282;
+        }
+
+        .save {
+            float: right;
+        }
+
+        .post-form textarea, .post-form input {
+            width: 100%;
+        }
+
+        .top-menu, .top-menu:hover, .top-menu:visited {
+            color: #ffffff;
+            float: right;
+            font-size: 26pt;
+            margin-right: 20px;
+        }
+
+        .post {
+            margin-bottom: 70px;
+        }
+
+        .post h1 a, .post h1 a:visited {
+            color: #000000;
+        }
+
+        .errorlist {
+            color: red;
+            font-weight: bold;
+        }
+
+        .comment {
+            margin: 20px 0px 20px 20px;
+        }
+
+        .vr {
+            display: block;
+            width: 10px;
+            background-color: #000;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 100px;
+        }
+        .comment-box{
+            margin : 10px;
+            width:85%;
+        }
+        .comment{
+            margin:20px 70px 20px 20px;
+            padding:50px 0 0 0;
+        }
+        #button{
+            float:right;
+            margin : 0 50px 0 0 ;
+            width : 150px;
+            height : 110px;
+        }
+        #btn-down{
+            width:150px;
+            height:70px;
+        }
+        #btn-remove {
+            width:75px;
+            height:40px;
+        }
+        #btn-edit{
+            width:75px;
+            height:40px;
+        }
+        .cmt{
+            margin: 10px;
+        }
+        #cmt-body {
+            height:70px;
+        }
+        .upload-btn{
+            width: 100px;
+            height: 45px;
+        }
+    </style>
+</head>
+<body>
+<div class="page-header">
+    <h1><a href="{% url 'main' %}">OSP Cloud</a></h1>
+    <hr>
+</div>
+<div id="main">
+    <div class="profile">
+        <center><h3> 안녕하세요 </h3></center>
+        <center><h2> {{ userinfo.name }} 님 </h2></center>
+        <center><h3> {{ userinfo.email }} </h3></center>
+        <br><br>
+        <h4>
+<!--            <a href="{% url 'user_edit' %}">회원정보수정</a>&nbsp;&nbsp;-->
+            <center><a href="{% url 'logout' %}">로그아웃</a></center>
+        </h4>
+    </div>
+    <div class="content_container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+</body>
+
+</html>
