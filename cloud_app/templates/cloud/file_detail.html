@@ -65,107 +65,57 @@
                 document.location.href = remove_url;
             }
         }
-
-        const comment_update = (id) => {
-            let CommentUpdate = document.querySelector('.CommentUpdate${id}');
-            let CommentEdit = document.querySelector('.CommentEdit${id}');
-            let EditCancel = document.querySelector('.EditCancel${id}');
-            let edit_box = document.querySelector('.edit_box${id}');
-
-            console.log(comment_update);
-            CommentUpdate.style.display = 'none';
-            CommentEdit.style.display = 'inline-block';
-            EditCancel.style.display = 'inline-block';
-            edit_box.style.display ='block';
-        }
-
-        const comment_edit = (id) => {
-            let edit_box = document.querySelector('.edit_box${id}').value;
-            let param = {
-                'id': id,
-                'content': edit_box
-            }
-            $.ajax({
-                url: "{%url 'comment_edit' %}",
-                type: 'POST',
-                headers: {
-                    'X-CSRFTOKEN': '{{ csrf_token }}'
-                },
-                data: JSON.stringify(param),
-                success: function (data) {
-                    console.log(data);
-                    if (data.result == 'ok') {
-                        let CommentUpdate = document.querySelector('.CommentUpdate${id}');
-                        let CommentEdit = document.querySelector('.CommentEdit${id}');
-                        let EditCancel = document.querySelector('.EditCancel${id}');
-                        let edit_box = document.querySelector('.edit_box${id}');
-
-                        CommentUpdate.style.display = 'inline-block';
-                        CommentEdit.style.display = 'none';
-                        EditCancel.style.display = 'none';
-                        edit_box.style.display ='none';
-                    }
-                },
-                error: function () {
-                    alert('수정이 불가능합니다')
-                }
-            });
-        }
     </script>
     <div class="detail">
         <div id="file">
-            <h2>{{ file.file_title }}</h2>
+            <h2>파일명 : {{ file.file_title }}</h2>
             <h4>{{ file.owner_name }} 님이 {{ file.file_upload }}에 업로드</h4>
             <br>
-            {% for guest_name in guest_names %}
-		        {{ file.guest_name }}
+            공유받은사람 :
+            {% for guest in guests %}
+		        {{ guest }}
             {% empty %}
             	<h4> 나만 보기 </h4>
             {% endfor %}
         </div>
         <div id="button">
-            <div id="down-btn">
-                <a class="btn-down" href="file.file_url.name">
-                    <button id="btn-down" type="submit" class="save btn btn-primary">다운로드</button></a>
-            </div>
-            {% if user.is_authenticated %}
-            <div id="edit-btn">
-                <p><a class="btn-edit" href="{% url 'file_edit' pk=file.pk %}">
-                    <button id="btn-edit" type="submit" class="save btn btn-primary">수정</button></a>
-                    <a class="btn-remove" href="#" onclick="file_remove()">
-                        <button id="btn-remove" type="submit" class="save btn btn-primary">삭제</button></a></p>
-            </div>
+            {% if userinfo.name|stringformat:'s' == file.owner_name|stringformat:'s' %}
+            <a class="btn-edit" href="{% url 'file_edit' pk=file.id %}">
+                <button id="btn-edit" type="submit" class="save btn btn-primary">수정</button></a>
+            <a class="btn-remove" href="#" onclick="file_remove()">
+                <button id="btn-remove" type="submit" class="save btn btn-primary">삭제</button></a>
+            <br>
             {% endif %}
+<<<<<<< HEAD
+            <a class="btn-down" href="https://ospcloud-filestorage.s3.us-west-2.amazonaws.com/{filename}'.format(filename = file.file_url.name)">
+=======
+            <a class="btn-down" href="file.file_url.name">
+>>>>>>> 6e46fd9b24c56164c8d09d6b92b1648d21a8ab7b
+                <button id="btn-down" type="submit" class="save btn btn-primary">다운로드</button></a>
         </div>
     </div>
     <br>
     <div class="comment">
-        {% csrf_token %}
-            <h4>댓글</h4>
-            <form method="POST" action="{% url 'add_comment' pk=file.pk%}">
-                {% csrf_token %}
-                {{ comment_form }}
-                <input class="com_btn" type="submit" value="작성">
-            </form>
-        <hr width="95%">
+        <h4>댓글</h4>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+{#            {{form.as_p}}#}
+            <input name="body" type="text" class="comment-box" value="">
+            <input class="com_btn" type="submit" value="작성">
+        </form>
+        <hr width="100%">
         {% for comment in comments %}
-        <br>
         <div class="cmt">
             <div id="cmt-body">
-                <h4><strong>{{ comment.comment_name }}</strong></h4>
+                <h4>{{ comment.comment_name }}</h4>
                 <h4>{{ comment.comment_text }}</h4>
                 <h5>{{comment.comment_date}}</h5>
-                <input type="text" class="edit_box{{ comment.id }}" value="{{ comment.comment_text }}" style="display:none">
             </div>
-            <div id="cmt-footer">
-                {% if user.is_authenticated %}
-                    <div id="edit_btn">
-                        <span class="CommentUpdate{{ comment.id }}"><input type="button" value="수정" onclick="comment_update({{ comment.id }})"></span>
-                        <span class="CommentEdit{{ comment.id }}"  style="display:none"><input type="button" value="완료" onclick="commentEdit({{ comment.id }})"></span>
-                        <span class="EditCancel{{ comment.id }}"  style="display:none"><input type="button" value="취소" onclick="editCancel({{ comment.id }})"></span>
-                        <a class="btn-remove" href="{% url 'remove_comment' pk=comment.pk %}">
-                            <input type="button" value="삭제"></a>
-                    </div>
+            <br>
+            <div id="edit_btn">
+                {% if userinfo.name|stringformat:'s' == comment.comment_name|stringformat:'s' %}
+{#                <a class="btn-edit" href="{% url 'comment_edit' pk=comment.id %}"><input type="button" value="수정"></a>#}
+                <a class="btn-remove" href="{% url 'remove_comment' pk=comment.id %}"><input type="button" value="삭제"></a>
                 {% endif %}
             </div>
         </div>

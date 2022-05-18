@@ -7,7 +7,7 @@ from cloud_app.models import FileDetailInfo, UserInfo, Comment
 class FileUploadForm(forms.ModelForm):
 	class Meta:
 		model = FileDetailInfo
-		fields = ['file_title', 'guest_name', 'file_url', ]
+		fields = ('file_title', 'guest_name', 'file_url', )
 		labels ={
 			'file_title': '파일명',
 			'guest_name': '공유명단',
@@ -46,4 +46,4 @@ class CommentForm(forms.ModelForm):
 	class Meta:
 		model = Comment
 		fields = ['comment_text',]
-		labels = {'comment_text': '',}
+		# labels = {'comment_text': '',}
