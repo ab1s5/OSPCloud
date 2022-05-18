@@ -35,7 +35,6 @@ def user_edit(request):
         form = UserEditForm(request.user)
     return render(request, 'cloud/user_edit.html', {'form': form})
 
-
 def file_upload(request):
     user = UserInfo.objects.filter(name=request.session.get('name')).get()
     if request.method == 'POST':
@@ -43,10 +42,13 @@ def file_upload(request):
         print('aaaaaaa')
         print('id')
         print('bbbbbbb')
-        id=1
-        for x in range(1, 100):
-            id+= 1
-            id.insert_one({"id": id})
+        id = 1
+        files = FileDetailInfo.objects.all()
+        maxid = 0
+        for file in files:
+            maxid = max(maxid, file.id)
+        id = maxid + 1
+        print(id)
         file_title = request.POST['file_title']
         guest_name = request.POST['guest_name']
         file_url = request.FILES.get('file_url')
@@ -67,15 +69,65 @@ def file_upload(request):
     else:
         form = FileUploadForm()
     return render(request, 'cloud/file_upload.html', {'form': form, 'userinfo': user, })
+# def file_upload(request):
+#     user = UserInfo.objects.filter(name=request.session.get('name')).get()
+#     if request.method == 'POST':
+#         form = FileUploadForm(request.POST, request.FILES, request.session)
+#         print('aaaaaaa')
+#         print('id')
+#         print('bbbbbbb')
+#         id=1
+#         for x in range(1, 100):
+#             id+= 1
+#             id.insert_one({"id": id})
+#         file_title = request.POST['file_title']
+#         guest_name = request.POST['guest_name']
+#         file_url = request.FILES.get('file_url')
+#         owner_name = user
+#         # file_url = request.FILES['file_url']
+#         print('-----------')
+#         print(request.FILES)
+#         print('-----------')
+#         file = FileDetailInfo(
+#             id=id,
+#             file_title=file_title,
+#             guest_name=guest_name,
+#             file_url=file_url,
+#             owner_name=owner_name,
+#         )
+#         file.save()
+#         return redirect('main')
+#     else:
+#         form = FileUploadForm()
+#     return render(request, 'cloud/file_upload.html', {'form': form, 'userinfo': user, })
 
 
 def file_detail(request, pk):
     user = UserInfo.objects.filter(name=request.session.get('name')).get()
     file = get_object_or_404(FileDetailInfo, pk=pk)
+    print(user)
+    print(file.owner_name)
     guests = file.guest_name.strip().split(",")
     comments = Comment.objects.filter(file_detail=pk)
     comment_form = CommentForm()
-    context = {'file': file, 'comments':comments, 'comment_form': comment_form, 'userinfo':user, 'guests':guests}
+    if request.method == "POST":
+        file_detail = file
+        comment_text = request.POST['body']
+        comment_name = user
+        comment = Comment(
+            file_detail=file_detail,
+            comment_text=comment_text,
+            comment_name=comment_name,
+        )
+        comment.save()
+        return redirect('file_detail', pk)
+    # form = CommentForm(request.POST)
+    # if form.is_valid():
+    #     form = form.save(commit=False)
+    #     comment.comment_name = user
+    #     form.save()
+    #     return redirect('file_detail', pk)
+    context = {'file': file, 'comments':comments,'comment_form':comment_form, 'userinfo':user, 'guests':guests}
     return render(request, 'cloud/file_detail.html', context)
 
 
@@ -96,6 +148,9 @@ def sign_up(request):
 def file_edit(request, pk):
     user = UserInfo.objects.filter(name=request.session.get('name')).get()
     file = get_object_or_404(FileDetailInfo, pk=pk)
+    if user != file.owner_name:
+        messages.error(request, '수정할 수 없습니다')
+        return redirect('file_detail', pk=file.id)
     if request.method == "POST":
         form = FileUploadForm(request.POST, request.FILES, request.session)
         # if form.is_valid():
@@ -123,32 +178,37 @@ def file_edit(request, pk):
 
 
 def file_remove(request, pk):
+    user = UserInfo.objects.filter(name=request.session.get('name')).get()
     file = get_object_or_404(FileDetailInfo, pk=pk)
+    if user != file.owner_name:
+        messages.error(request, '삭제할 수 없습니다')
+        return redirect('file_detail', pk=file.id)
     file.delete()
     return redirect('main')
 
-@method_decorator(csrf_exempt)
-def add_comment(request, pk):
-    user = UserInfo.objects.filter(name=request.session.get('name')).get()
-    # file = fileDetailInfo.objects.filter(file.id=pk)
-    if request.method == 'POST':
-        form = CommentForm(request.POST, request.session)
-        comment_text = request.POST.get('comment_text')
-        file_detail = FileDetailInfo.id
-        comment_name = user
-        comment = Comment(
-            id=file_detail,
-            comment_text=comment_text,
-            comment_name=comment_name,
-        )
-        comment.save()
-        file_pk = comment.file_details
-        return redirect('file_detail', pk=file_pk)
+# @method_decorator(csrf_exempt)
 # def add_comment(request, pk):
+#     user = UserInfo.objects.filter(name=request.session.get('name')).get()
+#     # file = fileDetailInfo.objects.filter(file.id=pk)
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST, request.session)
+#         comment_text = request.POST.get('comment_text')
+#         file_detail = file
+#         comment_name = user
+#         comment = Comment(
+#             file_detail=file_detail,
+#             comment_text=comment_text,
+#             comment_name=comment_name,
+#         )
+#         comment.save()
+#         file_pk = comment.file_details
+#         return redirect('file_detail', pk=file_pk)
+# def add_comment(request, pk):
+#     user = UserInfo.objects.filter(name=request.session.get('name')).get()
 #     form = CommentForm(request.POST)
 #     if form.is_valid():
 #         form = form.save(commit=False)
-#         comment.comment_name = request.user
+#         comment.comment_name = user
 #         form.save()
 #         return redirect('file_detail', pk)
 

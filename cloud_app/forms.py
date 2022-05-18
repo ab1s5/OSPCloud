@@ -46,4 +46,4 @@ class CommentForm(forms.ModelForm):
 	class Meta:
 		model = Comment
 		fields = ['comment_text',]
-		labels = {'comment_text': '',}
+		# labels = {'comment_text': '',}

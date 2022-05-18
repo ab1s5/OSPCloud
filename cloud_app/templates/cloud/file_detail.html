@@ -79,24 +79,26 @@
             {% endfor %}
         </div>
         <div id="button">
+            {% if userinfo.name|stringformat:'s' == file.owner_name|stringformat:'s' %}
             <a class="btn-edit" href="{% url 'file_edit' pk=file.id %}">
                 <button id="btn-edit" type="submit" class="save btn btn-primary">수정</button></a>
             <a class="btn-remove" href="#" onclick="file_remove()">
                 <button id="btn-remove" type="submit" class="save btn btn-primary">삭제</button></a>
             <br>
-            <a class="btn-down" href="file.file_url.name">
+            {% endif %}
+            <a class="btn-down" href="https://ospcloud-filestorage.s3.us-west-2.amazonaws.com/{filename}'.format(filename = file.file_url.name)">
                 <button id="btn-down" type="submit" class="save btn btn-primary">다운로드</button></a>
-
         </div>
     </div>
     <br>
     <div class="comment">
-            <h4>댓글</h4>
-        {% csrf_token %}
-            <form method="POST" action="{% url 'add_comment' pk=file.id %}" enctype="multipart/form-data">
-                <input type="text" class="comment-box">
-                <input class="com_btn" type="submit" value="작성">
-            </form>
+        <h4>댓글</h4>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+{#            {{form.as_p}}#}
+            <input name="body" type="text" class="comment-box" value="">
+            <input class="com_btn" type="submit" value="작성">
+        </form>
         <hr width="100%">
         {% for comment in comments %}
         <div class="cmt">
@@ -105,9 +107,12 @@
                 <h4>{{ comment.comment_text }}</h4>
                 <h5>{{comment.comment_date}}</h5>
             </div>
+            <br>
             <div id="edit_btn">
-                <a class="btn-edit" href=""><input type="button" value="수정"></a>
-                <a class="btn-remove" href=""><input type="button" value="삭제"></a>
+                {% if userinfo.name|stringformat:'s' == comment.comment_name|stringformat:'s' %}
+{#                <a class="btn-edit" href="{% url 'comment_edit' pk=comment.id %}"><input type="button" value="수정"></a>#}
+                <a class="btn-remove" href="{% url 'remove_comment' pk=comment.id %}"><input type="button" value="삭제"></a>
+                {% endif %}
             </div>
         </div>
         <br><hr>

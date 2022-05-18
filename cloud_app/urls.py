@@ -11,7 +11,7 @@ urlpatterns = [
     path('detail/<int:pk>', views.file_detail, name='file_detail'),
     path('edit/<int:pk>', views.file_edit, name='file_edit'),
     path('remove/<int:pk>', views.file_remove, name='file_remove'),
-    path('commentadd/<int:pk>', views.add_comment, name='add_comment'),
+
     path('removecom/<int:pk>', views.remove_comment, name='remove_comment'),
     path('commentedit/<int:pk>', views.comment_edit, name='comment_edit'),
     path('login/', views.login, name='login'),
