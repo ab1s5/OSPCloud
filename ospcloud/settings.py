@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'ospcloud_app',
+    'cloud_app',
     'rest_framework',
 
     'storages',

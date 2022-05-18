@@ -325,3 +325,7 @@ def check_session(request: HttpRequest):
 def logout(request):
     request.session.flush()
     return redirect('main')
+
+
+def go_home(request):
+    return redirect('main')
